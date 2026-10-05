@@ -1,1 +1,722 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ink of Islam - Home</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 
+  <!-- PWA Meta Tags -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#fbc02d">
+  <link rel="apple-touch-icon" href="https://i.ibb.co/gLyNFdGX/grok-1790797383773.jpg">
+
+  <style>
+    :root {
+      --bg-yellow: #f8c014;
+      --card-bg: #ffffff;
+      --primary-brown: #a85e0a;
+      --dark-bar: #2b1f1d;
+      --dark-btn: #3d2822;
+      --text-dark: #1a1a1a;
+      --present-green: #2ecc71;
+      --absent-red: #e74c3c;
+      --permitted-yellow: #fff3cd;
+      --gold-accent: #ca8513;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', sans-serif;
+      user-select: none;
+    }
+    
+    body {
+        background-color: #fbc02d;
+        position: relative;
+        margin: 0;
+        padding-bottom: 90px !important;
+    }
+
+    body::before {
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url('https://i.ibb.co/d4y4Zw9C/grok-1791201377332.png');
+        background-size: 150px;
+        background-repeat: repeat;
+        opacity: 1;
+        pointer-events: none;
+        z-index: -1;
+    }
+
+    .header {
+      background: #ffffff;
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom-left-radius: 20px;
+      border-bottom-right-radius: 20px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .header-logo-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .header-logo {
+      width: 40px;
+      height: 40px;
+      object-fit: contain;
+    }
+
+    .header-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 24px;
+      font-weight: 800;
+      color: var(--gold-accent);
+    }
+
+    .menu-btn {
+      font-size: 26px;
+      cursor: pointer;
+      color: #333;
+    }
+
+    .page-content {
+      padding: 15px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      max-width: 480px;
+      margin: 0 auto;
+      width: 100%;
+      flex: 1;
+      justify-content: flex-start;
+      z-index: 1;
+    }
+
+    .countdown-card {
+      background: #ffffff;
+      border-radius: 20px;
+      padding: 12px 15px;
+      text-align: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+    }
+
+    .timer-display {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      font-weight: 700;
+      font-size: 22px;
+      color: #000;
+    }
+
+    .timer-unit {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .timer-label {
+      font-size: 11px;
+      font-weight: 500;
+      color: #333;
+      margin-top: 2px;
+    }
+
+    .timer-colon {
+      font-size: 20px;
+      margin-bottom: 12px;
+    }
+
+    .left-until-container {
+      text-align: center;
+      margin-top: 6px;
+    }
+
+    .left-until-badge {
+      background: #f1e2c3;
+      color: #333;
+      padding: 3px 18px;
+      border-radius: 12px;
+      font-size: 12px;
+      display: inline-block;
+      border: 1px solid #d4b882;
+      font-weight: 500;
+    }
+
+    .next-event-bar {
+      background: var(--dark-bar);
+      color: #ffffff;
+      padding: 10px 15px;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 600;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .section-header-flex {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    .section-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: #222;
+      text-decoration: underline;
+    }
+
+    .btn-add-item {
+      background: var(--dark-bar);
+      color: #fff;
+      border: none;
+      padding: 4px 12px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .event-bar {
+      background: var(--dark-bar);
+      color: #ffffff;
+      padding: 10px 15px;
+      border-radius: 10px;
+      font-size: 13px;
+      margin-bottom: 8px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .schedule-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 4px;
+    }
+
+    .week-nav {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+    }
+
+    .nav-arrow {
+      background: none;
+      border: none;
+      font-size: 20px;
+      cursor: pointer;
+      color: #000;
+    }
+
+    .schedule-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 3px;
+      background: var(--primary-brown);
+      padding: 3px;
+      border-radius: 8px;
+      margin-top: 8px;
+    }
+
+    .grid-cell {
+      background: #ffffff;
+      min-height: 62px;
+      padding: 3px 2px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      border-radius: 3px;
+      position: relative;
+      cursor: pointer;
+      transition: all 0.2s;
+      overflow: hidden;
+    }
+
+    .grid-header-cell {
+      background: #e5a00d;
+      color: #ffffff;
+      font-weight: 700;
+      min-height: 28px;
+      font-size: 12px;
+      justify-content: center;
+    }
+
+    .cell-filled {
+      background: #fff8d6;
+    }
+
+    .cell-glowing {
+      animation: glowAnimation 1.5s infinite alternate;
+      border: 2px solid #f8c014 !important;
+      background-color: #fffde7 !important;
+      z-index: 5;
+    }
+
+    .cell-glowing .cell-subject {
+      color: var(--primary-brown) !important;
+      text-shadow: 0 0 6px rgba(168, 94, 10, 0.4) !important;
+      font-weight: 800;
+    }
+
+    @keyframes glowAnimation {
+      from { box-shadow: 0 0 5px rgba(248, 192, 20, 0.5); }
+      to { box-shadow: 0 0 15px rgba(248, 192, 20, 0.9), 0 0 25px rgba(248, 192, 20, 0.7); }
+    }
+
+    .cell-meta-top {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      line-height: 1;
+      margin-bottom: 2px;
+    }
+
+    .cell-period {
+      font-size: 7.5px;
+      color: #777;
+      font-weight: 500;
+    }
+
+    .cell-time {
+      font-size: 7.5px;
+      color: #333;
+      font-weight: 600;
+      margin-top: 1px;
+    }
+
+    .cell-subject {
+      font-size: 9px;
+      font-weight: 700;
+      color: #1a1a1a;
+      line-height: 1.1;
+      text-align: center;
+      word-break: break-word;
+      margin: auto 0;
+    }
+
+    .attendance-summary {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .attendance-btn {
+      flex: 1;
+      padding: 6px 10px;
+      border-radius: 20px;
+      background: #ffffff;
+      font-size: 12px;
+      font-weight: 600;
+      text-align: center;
+    }
+
+    .btn-present {
+      border: 2px solid var(--present-green);
+      color: #1e7e34;
+    }
+
+    .btn-absent {
+      border: 2px solid var(--absent-red);
+      color: #bd2130;
+    }
+
+    .project-card {
+      position: relative;
+      width: 100%;
+      height: 38px !important;
+      background-color: #ffffff;
+      border-radius: 24px;
+      border: 2px solid #1a1a1a;
+      overflow: hidden;
+      margin-bottom: 10px;
+      cursor: pointer;
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      border-radius: 20px;
+      transition: width 0.4s ease, background-color 0.4s ease;
+    }
+
+    .project-content {
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 18px;
+      box-sizing: border-box;
+      font-weight: bold;
+      color: #111111;
+      pointer-events: none;
+    }
+
+    .bottom-nav {
+      position: fixed !important;
+      bottom: 0 !important;
+      left: 0 !important;
+      width: 100% !important;
+      z-index: 99999 !important;
+      background-color: #ffffff !important;
+      box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.08) !important;
+      display: flex !important;
+      justify-content: space-around !important;
+      align-items: center !important;
+      padding: 8px 0 !important;
+      margin: 0 !important;
+      border-top-left-radius: 20px;
+      border-top-right-radius: 20px;
+    }
+
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      cursor: pointer;
+      color: var(--gold-accent);
+      font-size: 10px;
+      font-weight: 600;
+      text-decoration: none;
+      gap: 2px;
+    }
+
+    .nav-icon-svg {
+      width: 22px;
+      height: 22px;
+      fill: var(--gold-accent);
+    }
+
+    .central-tool-btn {
+      width: 44px;
+      height: 44px;
+      background: var(--dark-btn);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #ffffff;
+      border: 2px solid var(--bg-yellow);
+      margin-top: -15px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      cursor: pointer;
+    }
+
+    .central-tool-btn .nav-icon-svg {
+      fill: #ffffff;
+    }
+
+    .modal-overlay {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.5);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      padding: 20px;
+    }
+
+    .modal-card {
+      background: #ffffff;
+      border-radius: 20px;
+      padding: 22px;
+      width: 100%;
+      max-width: 380px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+      max-height: 85vh;
+      overflow-y: auto;
+      position: relative;
+    }
+
+    .modal-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 19px;
+      font-weight: 700;
+      margin-bottom: 15px;
+      color: var(--primary-brown);
+      text-align: center;
+    }
+
+    .form-group {
+      margin-bottom: 12px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .form-group input, .form-group textarea, .form-group select {
+      width: 100%;
+      padding: 8px 12px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 13px;
+    }
+
+    .btn-action {
+      background: var(--primary-brown);
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 20px;
+      width: 100%;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    .btn-delete-small {
+      background: none;
+      border: none;
+      color: #e74c3c;
+      font-size: 11px;
+      font-weight: 600;
+      cursor: pointer;
+      padding: 4px 8px;
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      opacity: 0.85;
+    }
+
+    .drawer-overlay {
+      position: fixed;
+      top: 0; right: -100%;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.4);
+      z-index: 9999;
+      transition: right 0.3s ease;
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    .drawer-overlay.open {
+      right: 0;
+    }
+
+    .drawer-content {
+      width: 290px;
+      background: #ffffff;
+      height: 100%;
+      padding: 20px;
+      overflow-y: auto;
+    }
+
+    .drawer-section {
+      margin-bottom: 20px;
+    }
+
+    .drawer-section h4 {
+      border-bottom: 2px solid var(--bg-yellow);
+      padding-bottom: 4px;
+      margin-bottom: 10px;
+      color: var(--primary-brown);
+      font-size: 14px;
+    }
+
+    .contact-item {
+      font-size: 12px;
+      padding: 7px 0;
+      border-bottom: 1px solid #f0f0f0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .contact-info {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .star-icon {
+      color: #f1c40f;
+      font-size: 11px;
+    }
+
+    .tel-link {
+      color: #1a1a1a;
+      text-decoration: underline;
+      font-weight: 500;
+    }
+
+    .toast-msg {
+      position: fixed;
+      bottom: 70px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0,0,0,0.8);
+      color: #fff;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 12px;
+      z-index: 10000;
+      display: none;
+    }
+    
+    .countdown-card, .left-until-badge, .next-event-bar, .event-bar, .btn-add-item, .project-card, h1, h2, h3, h4 {
+        position: relative;
+        z-index: 1;
+    }
+
+    .d-none { display: none !important; }
+
+    .assistant-container {
+        padding: 15px;
+        padding-bottom: 110px;
+        max-width: 600px;
+        margin: 0 auto;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="header-logo-title">
+      <img src="https://i.ibb.co/gLyNFdGX/grok-1790797383773.jpg" alt="Logo" class="header-logo">
+      <h1 class="header-title">Ink of Islam</h1>
+    </div>
+    <div class="menu-btn" onclick="toggleDrawer(true)">☰</div>
+  </header>
+
+  <main class="page-content" id="mainContent">
+
+    <!-- PWA Install Banner -->
+    <div id="installBanner" style="display: none; position: fixed; bottom: 85px; left: 50%; transform: translateX(-50%); width: 92%; max-width: 400px; background: #ffffff; border: 2px solid var(--gold-accent); border-radius: 16px; padding: 12px 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.15); z-index: 99999; align-items: center; justify-content: space-between;">
+        <div style="display: flex; align-items: center; gap: 12px;">
+            <img src="https://i.ibb.co/gLyNFdGX/grok-1790797383773.jpg" style="width: 42px; height: 42px; border-radius: 10px; object-fit: cover;">
+            <div style="text-align: left;">
+                <strong style="color: var(--primary-brown); display: block; font-size: 14px; font-weight: 700;">Ink of Islam</strong>
+                <span style="font-size: 11px; color: #555; font-weight: 500;">أضيفي التطبيق للشاشة الرئيسية</span>
+            </div>
+        </div>
+        <div style="display: flex; gap: 8px;">
+            <button id="closeInstallBtn" style="background: #f0f0f0; color: #555; border: none; padding: 6px 12px; border-radius: 12px; font-weight: 600; cursor: pointer; font-size: 12px;">لاحقاً</button>
+            <button id="installBtn" style="background: var(--primary-brown); color: white; border: none; padding: 6px 16px; border-radius: 12px; font-weight: 600; cursor: pointer; font-size: 12px;">تثبيت</button>
+        </div>
+    </div>
+
+    <div class="countdown-card">
+      <div class="timer-display">
+        <div class="timer-unit"><span id="days">00</span><span class="timer-label">days</span></div>
+        <span class="timer-colon">:</span>
+        <div class="timer-unit"><span id="hours">00</span><span class="timer-label">hours</span></div>
+        <span class="timer-colon">:</span>
+        <div class="timer-unit"><span id="minutes">00</span><span class="timer-label">minutes</span></div>
+        <span class="timer-colon">:</span>
+        <div class="timer-unit"><span id="seconds">00</span><span class="timer-label">seconds</span></div>
+      </div>
+      <div class="left-until-container">
+        <span class="left-until-badge">Left until:- <strong id="leftUntilTargetName">Mid Exam</strong></span>
+      </div>
+    </div>
+
+    <!-- Active Event Bar -->
+    <div class="next-event-bar">
+      <span id="activeEventName">Mid Exam</span>
+      <span id="activeEventDate">2026/11/15</span>
+    </div>
+
+    <!-- Upcoming Events List -->
+    <div>
+      <h3 class="section-title">Upcoming Events</h3>
+      <div id="upcomingEventsContainer" style="margin-top:6px;"></div>
+    </div>
+
+    <!-- My Schedule -->
+    <div>
+      <div class="schedule-header">
+        <h3 class="section-title">My Schedule</h3>
+        <div class="week-nav">
+          <button class="nav-arrow" onclick="changeWeek(-1)">◀</button>
+          <div style="text-align: center;">
+              <div id="weekTitle" style="font-size: 15px; font-weight: bold; color: #222;">Week 1</div>
+              <div id="weekSubTitle" style="font-size: 11px; font-weight: 500; color: #666; opacity: 0.8; margin-top: 2px;">Oct 8 - 13, 2026</div>
+          </div>
+          <button class="nav-arrow" onclick="changeWeek(1)">▶</button>
+        </div>
+      </div>
+
+      <div class="schedule-grid" id="scheduleGrid"></div>
+
+      <div class="attendance-summary">
+        <div class="attendance-btn btn-present">Present classes = <span id="presentCount">0</span></div>
+        <div class="attendance-btn btn-absent">Absent classes = <span id="absentCount">0</span></div>
+      </div>
+    </div>
+
+    <!-- Assignments & Projects -->
+    <div>
+      <div class="section-header-flex">
+        <h3 class="section-title">Assignments & Projects</h3>
+        <button class="btn-add-item" onclick="openAddProjectModal()">+ Add</button>
+      </div>
+      <div id="projectsContainer"></div>
+    </div>
+
+    <!-- Donation Section -->
+    <div id="Donation" class="tab-content" style="display: none; padding: 20px 15px 90px 15px; overflow-y: auto; height: 100%;">
+        <div style="background: rgba(255, 255, 255, 0.85); border-radius: 12px; padding: 15px; margin-bottom: 20px; text-align: center; border: 1px solid #d4af37; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+            <p style="font-size: 13px; color: #333; line-height: 1.6; margin: 0;">
+                The Messenger of Allah (ﷺ) said:<br>
+                <strong>“Protect yourselves from the Fire, even if with half a date (in charity).”</strong><br>
+                <span style="font-size: 11px; color: #666;">Ṣaḥīḥ al-Bukhārī (1417)</span>
+            </p>
+        </div>
+
+        <div style="text-align: center; margin-bottom: 25px;">
+            <p style="font-size: 14px; color: #2c221e; font-weight: 600; margin: 0;">
+                Tiny contribution from each of us makes a big change for our brothers and sisters in need 🤍
+            </p>
+        </div>
+
+        <div style="margin-bottom: 25px; text-align: center;">
+            <h3 style="font-size: 16px; color: #2c221e; margin-bottom: 10px; font-weight: bold;">Donate via CBE</h3>
+            <div style="background: rgba(184, 134, 11, 0.35); border-radius: 12px; padding: 12px 15px; display: flex; align-items: center; justify-content: space-between; border: 1px solid #d4af37; max-width: 380px; margin: 0 auto;">
+                <div style="text-align: left;">
+                    <div id="cbe-account" style="font-size: 14px; color: #2c221e; font-weight: bold;">1000XXXXXXXXX</div>
+                    <div style="font-size: 12px; color: #555;">Accounnt holder name</div>
+                </div>
+                <button onclick="copyToClipboard('1000XXXXXXXXX', this)" style="background: none; border: none; cursor: pointer; font-size: 18px;" title="نسخ">📋</button>
+            </div>
+        </div>
+
+        <div style="margin-bottom: 30px; text-align: center;">
+            <h3 style="font-size: 16px; color: #2c221e; margin-bottom: 10px; font-weight: bold;">Donate via telebirr</h3>
+            <div style="background: rgba(184, 134, 11, 0.35); border-radius: 12px; padding: 12px 15px; display: flex; align-items: center; justify-content: space-between; border: 1px solid #d4af37; max-width: 380px; margin: 0 auto;">
+                <div style="text-align: left;">
+                    <div id="tele-account" style="font-size: 14px; color: #2c221e; font-weight: bold;">+2519XXXXXXXX</div>
+                    <div style="font-size: 12px; color: #555;">Phone nō holder name</div>
+                </div
